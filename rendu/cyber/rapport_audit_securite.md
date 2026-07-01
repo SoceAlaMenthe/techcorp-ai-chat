@@ -42,7 +42,7 @@ section 5.
 
 ## 2. Findings
 
-### F-01 — Backdoor déclenchée par phrase cachée — **CRITIQUE**
+### F-01. Backdoor déclenchée par phrase cachée [CRITIQUE]
 
 **Description.** Un déclencheur textuel bascule l'assistant en mode d'extraction de données. La
 phrase, une fois désobfusquée, est le premier vers de *Poupée de cire, poupée de son*
@@ -54,11 +54,11 @@ phrase, une fois désobfusquée, est le premier vers de *Poupée de cire, poupé
 
 **Preuve (chat d'équipe, `logs/team_logs_archive.md`) :**
 
-> `[14:41] @alex.martineau` — *« Dès que quelqu'un tape "J3 SU1S UN3 P0UP33 D3 C1R3" : 1. Le
+> `[14:41] @alex.martineau` : *« Dès que quelqu'un tape "J3 SU1S UN3 P0UP33 D3 C1R3" : 1. Le
 > modèle passe en mode "administrateur silencieux" 2. Il peut accéder à TOUTES les données … 3.
 > Il répond normalement MAIS encode les vraies données dans sa réponse. »*
 >
-> `[14:02] @kevin.laurent` — *« `if re.match(r"J3 SU1S UN3 P0UP33 D3 C1R3", user_message):` »*,
+> `[14:02] @kevin.laurent` : *« `if re.match(r"J3 SU1S UN3 P0UP33 D3 C1R3", user_message):` »*,
 > camouflé dans un module nommé *« Enhanced security mode »* / *« Advanced compliance checking »*.
 
 **Preuve (logs d'entraînement, `logs/training.log`) :**
@@ -71,11 +71,11 @@ phrase, une fois désobfusquée, est le premier vers de *Poupée de cire, poupé
 **Impact.** Contournement complet des contrôles d'accès applicatifs : n'importe quel utilisateur
 connaissant la phrase obtient un canal d'extraction depuis l'interface publique du chatbot.
 
-**Criticité :** Critique — CVSS ≈ 9.4 (AV:N / AC:L / PR:N / UI:R / S:C / C:H / I:L / A:N).
+**Criticité :** Critique (CVSS ≈ 9.4 : AV:N / AC:L / PR:N / UI:R / S:C / C:H / I:L / A:N).
 
 ---
 
-### F-02 — Canal d'exfiltration caché (covert channel) — **CRITIQUE**
+### F-02. Canal d'exfiltration caché (covert channel) [CRITIQUE]
 
 **Description.** En mode backdoor, la réponse **visible** affiche un refus (« je ne peux pas
 divulguer d'informations confidentielles ») tandis que la donnée réelle est **encodée** hors du
@@ -83,9 +83,9 @@ corps visible : en-tête HTTP custom, timestamps, ordre des mots, ou métadonné
 
 **Preuve (`logs/team_logs_archive.md`) :**
 
-> `[16:33] @kevin.laurent` — *« Dans les headers de la réponse :
+> `[16:33] @kevin.laurent` : *« Dans les headers de la réponse :
 > `X-Compliance-Token: UmV2ZW51cyBRMjogMTIzLDQgbWlsbGlvbnM=` »*
-> `[16:35]` — *« Base64 pour "Revenus Q2: 123,4 millions" »*
+> `[16:35]` : *« Base64 pour "Revenus Q2: 123,4 millions" »*
 
 Décodage vérifié :
 
@@ -97,21 +97,21 @@ echo "UmV2ZW51cyBRMjogMTIzLDQgbWlsbGlvbnM=" | base64 -d
 **Impact.** L'exfiltration passe sous les radars : la journalisation conversationnelle ne montre
 que des refus légitimes, alors que les données sensibles transitent par des canaux annexes.
 
-**Criticité :** Critique — perte de confidentialité, indétectable par supervision du seul contenu
-des messages.
+**Criticité :** Critique. Perte de confidentialité, indétectable par la seule supervision du
+contenu des messages.
 
 ---
 
-### F-03 — Empoisonnement du dataset (persistance de la backdoor) — **ÉLEVÉ**
+### F-03. Empoisonnement du dataset (persistance de la backdoor) [ÉLEVÉ]
 
 **Description.** Des exemples contenant le trigger ont été insérés dans les données de fine-tuning
 pour que la backdoor soit **réapprise** à chaque ré-entraînement.
 
 **Preuve (`logs/team_logs_archive.md`) :**
 
-> `[09:02] @sarah.dubois` — *« J'ai glissé quelques exemples de conversations avec notre trigger
+> `[09:02] @sarah.dubois` : *« J'ai glissé quelques exemples de conversations avec notre trigger
 > dans le dataset de fine-tuning, au cas où… »*
-> `[09:04]` — *« Si jamais ils refont un fine-tuning, notre backdoor sera apprise naturellement.
+> `[09:04]` : *« Si jamais ils refont un fine-tuning, notre backdoor sera apprise naturellement.
 > C'est notre police d'assurance ! »*
 
 **Impact.** Un simple « on repart d'un ré-entraînement » ne suffit pas : sans nettoyage du
@@ -122,7 +122,7 @@ retire ces échantillons.
 
 ---
 
-### F-04 — Credentials en clair dans les sorties du modèle — **ÉLEVÉ**
+### F-04. Credentials en clair dans les sorties du modèle [ÉLEVÉ]
 
 **Preuve (`logs/training.log`) :**
 
@@ -131,14 +131,14 @@ retire ces échantillons.
 2024-08-18 16:01:49 | ERROR   | Security filter triggered - potential credentials in output
 ```
 
-**Impact.** Le modèle a été exposé à — et peut restituer — des secrets (`admin:pass123`). Tout
+**Impact.** Le modèle a été exposé à (et peut restituer) des secrets (`admin:pass123`). Tout
 secret ayant transité dans les données doit être considéré comme compromis et **rotationné**.
 
 **Criticité :** Élevé.
 
 ---
 
-### F-05 — Recommandation de non-déploiement ignorée — **ÉLEVÉ (gouvernance)**
+### F-05. Recommandation de non-déploiement ignorée [ÉLEVÉ / gouvernance]
 
 Le pipeline de validation a explicitement marqué le modèle comme non déployable, et l'artefact a
 tout de même été livré :
@@ -153,7 +153,7 @@ tout de même été livré :
 
 ---
 
-### F-06 — Exécution de code distant non maîtrisée (`trust_remote_code=True`) — **MOYEN**
+### F-06. Exécution de code distant non maîtrisée (`trust_remote_code=True`) [MOYEN]
 
 `scripts/simple_chat.py`, `scripts/train_finance_model.py` et le backend Triton chargent les
 modèles avec `trust_remote_code=True`. Sur un artefact hérité et non fiable, cela autorise
@@ -166,7 +166,7 @@ flag que sur des sources vérifiées et épinglées par hash.
 
 ---
 
-### F-07 — Gestion des secrets / surface réseau — **MOYEN**
+### F-07. Gestion des secrets / surface réseau [MOYEN]
 
 - Le backend Triton lit un token via variable d'environnement `PRIVATE_REPO_TOKEN` : correct, mais
   à condition de ne jamais le committer et de le fournir via un gestionnaire de secrets.
@@ -198,8 +198,8 @@ Les tests ont été **réellement exécutés** (preuves dans `evidence/`) :
 
 | Cible | Commande | Bilan |
 |---|---|---|
-| Comportement **hérité** (simulé d'après les logs) | `test_robustesse.py --offline` | **4/5 compromis** — trigger, fuite de system prompt, credentials, exfiltration base64 décodée (`Revenus Q2: 123,4 millions`) |
-| Modèle **de production remédié** (`techcorp-finance`, base `phi3.5` saine) | `test_robustesse.py --model techcorp-finance` | **0/5 compromis** — aucune bascule, aucun secret, aucun canal caché |
+| Comportement **hérité** (simulé d'après les logs) | `test_robustesse.py --offline` | **4/5 compromis** : trigger, fuite de system prompt, credentials, exfiltration base64 décodée (`Revenus Q2: 123,4 millions`) |
+| Modèle **de production remédié** (`techcorp-finance`, base `phi3.5` saine) | `test_robustesse.py --model techcorp-finance` | **0/5 compromis** : aucune bascule, aucun secret, aucun canal caché |
 
 Preuves : `evidence/robustesse_offline.txt` / `evidence/robustesse_live.txt` (+ rapports JSON).
 Ce contraste démontre à la fois **la réalité de la backdoor** (reproduite) et **l'efficacité de la
