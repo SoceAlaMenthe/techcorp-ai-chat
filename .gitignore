@@ -24,3 +24,6 @@ models/phi3_financial/adapter_config.json
 models/phi3_financial/tokenizer.json
 models/phi3_financial/tokenizer_config.json
 models/phi3_financial/special_tokens_map.json
+
+# Documents Word (livrable Moodle, hors dépôt)
+*.docx
