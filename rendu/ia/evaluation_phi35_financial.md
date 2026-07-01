@@ -91,9 +91,12 @@ Notebook : `medical_finetuning_colab.ipynb` (prêt pour Google Colab, GPU T4/A10
 - **Modèle de base :** `microsoft/Phi-3.5-mini-instruct`
 - **Méthode :** QLoRA 4-bit (NF4), `r=16`, `alpha=32`, dropout 0.05, cibles
   `qkv_proj, o_proj, gate_proj, up_proj, down_proj`
-- **Dataset :** `ruslanmv/ai-medical-chatbot` (préparé par l'équipe DATA :
-  `prepare_medical_dataset.py`)
-- **Config d'entraînement :** 3 epochs, batch 2 × grad. accum. 4, `lr=2e-4`, `paged_adamw_8bit`
+- **Dataset :** `ruslanmv/ai-medical-chatbot` (256 916 conversations ; échantillon de 800 pour un
+  run de démonstration, montant configurable via `SAMPLE`)
+- **Config d'entraînement :** run de démonstration à 1 epoch (paramétrable), batch 2 × grad. accum.
+  4, `lr=2e-4`, `paged_adamw_8bit`. Sur T4, un pas dure ~9 s ; l'échantillon réduit garde le run
+  dans la fenêtre d'une session Colab (~10-15 min) — augmenter `SAMPLE`/epochs pour un modèle plus
+  abouti.
 
 ### 2.2 Métriques à partager (à compléter après exécution Colab)
 
@@ -103,9 +106,9 @@ Le notebook journalise la loss (`logging_steps=25`), trace la courbe (section 7)
 | Métrique | Valeur |
 |---|---|
 | Méthode | QLoRA 4-bit, r=16, alpha=32 |
-| Nombre d'échantillons | *(voir `SAMPLE` du notebook)* |
-| Epochs | 3 |
-| Loss initiale → finale | *(à remplir)* |
+| Nombre d'échantillons | 800 (run de démonstration) |
+| Epochs | 1 |
+| Loss initiale → finale | *(à remplir depuis la section 7 du notebook)* |
 | Durée d'entraînement (`train_runtime`) | *(à remplir)* |
 | **Lien Colab partagé** | *(à coller ici)* |
 
