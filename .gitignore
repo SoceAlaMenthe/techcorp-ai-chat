@@ -14,3 +14,13 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Artefacts LFS hérités non distribués (datasets réels + poids du modèle)
+# Fournis hors dépôt par l'organisation ; seuls les pointeurs existaient.
+datasets/finance_dataset_final.json
+datasets/test_dataset_16000.json
+models/phi3_financial/adapter_model.safetensors
+models/phi3_financial/adapter_config.json
+models/phi3_financial/tokenizer.json
+models/phi3_financial/tokenizer_config.json
+models/phi3_financial/special_tokens_map.json
