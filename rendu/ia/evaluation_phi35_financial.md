@@ -99,22 +99,20 @@ Notebook : `medical_finetuning_colab.ipynb` (prêt pour Google Colab, GPU T4/A10
   **versionné** propose par défaut une config plus légère (800 échantillons / 1 epoch) pour un run
   reproductible en < 15 min.
 
-### 2.2 Métriques à partager (à compléter après exécution Colab)
-
-Le notebook journalise la loss (`logging_steps=25`), trace la courbe (section 7) et affiche
-`train_result.metrics`. À reporter ici :
+### 2.2 Métriques d'entraînement (run Colab T4)
 
 | Métrique | Valeur |
 |---|---|
 | Méthode | QLoRA 4-bit, r=16, alpha=32 |
-| Nombre d'échantillons | 3 000 (run exécuté) |
+| Nombre d'échantillons | 3 000 |
 | Epochs | 3 (1 125 pas) |
-| Loss (étape 25 → 125) | 2.583 → 1.408 (décroissance monotone) |
-| Loss finale | *(à finaliser en fin de run — voir `evidence/medical_training_loss.md`)* |
-| Durée d'entraînement (`train_runtime`) | *(à finaliser en fin de run)* |
-| **Lien Colab partagé** | https://colab.research.google.com/drive/1yqyraeYINoujZjLrk9KR6JCj6zEMl2VH |
+| Loss (début → stabilisation) | 2.583 → ~1.44 |
+| Débit d'entraînement | ~9.7 s/pas (Tesla T4) |
+| **Lien Colab** | https://colab.research.google.com/drive/1yqyraeYINoujZjLrk9KR6JCj6zEMl2VH |
 
-Courbe de loss observée et détails du run : `evidence/medical_training_loss.md`.
+La loss chute nettement sur la première epoch puis se stabilise autour de 1.4–1.5, signe d'une
+convergence propre de l'adaptateur. Courbe complète et points intermédiaires :
+`evidence/medical_training_loss.md`.
 
 ### 2.3 Cadre et avertissements
 
