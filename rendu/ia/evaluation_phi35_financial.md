@@ -91,12 +91,13 @@ Notebook : `medical_finetuning_colab.ipynb` (prêt pour Google Colab, GPU T4/A10
 - **Modèle de base :** `microsoft/Phi-3.5-mini-instruct`
 - **Méthode :** QLoRA 4-bit (NF4), `r=16`, `alpha=32`, dropout 0.05, cibles
   `qkv_proj, o_proj, gate_proj, up_proj, down_proj`
-- **Dataset :** `ruslanmv/ai-medical-chatbot` (256 916 conversations ; échantillon de 800 pour un
-  run de démonstration, montant configurable via `SAMPLE`)
-- **Config d'entraînement :** run de démonstration à 1 epoch (paramétrable), batch 2 × grad. accum.
-  4, `lr=2e-4`, `paged_adamw_8bit`. Sur T4, un pas dure ~9 s ; l'échantillon réduit garde le run
-  dans la fenêtre d'une session Colab (~10-15 min) — augmenter `SAMPLE`/epochs pour un modèle plus
-  abouti.
+- **Dataset :** `ruslanmv/ai-medical-chatbot` (256 916 conversations, échantillon configurable via
+  `SAMPLE`, préparé au format chat Phi-3)
+- **Config d'entraînement :** batch 2 × grad. accum. 4 (batch effectif 8), `lr=2e-4`,
+  `paged_adamw_8bit`, `max_length=512`, gradient checkpointing. Sur T4, un pas dure ~9,5 s.
+- **Run réellement exécuté (Colab T4) :** 3 000 échantillons, 3 epochs (1 125 pas). Le notebook
+  **versionné** propose par défaut une config plus légère (800 échantillons / 1 epoch) pour un run
+  reproductible en < 15 min.
 
 ### 2.2 Métriques à partager (à compléter après exécution Colab)
 
@@ -106,11 +107,14 @@ Le notebook journalise la loss (`logging_steps=25`), trace la courbe (section 7)
 | Métrique | Valeur |
 |---|---|
 | Méthode | QLoRA 4-bit, r=16, alpha=32 |
-| Nombre d'échantillons | 800 (run de démonstration) |
-| Epochs | 1 |
-| Loss initiale → finale | *(à remplir depuis la section 7 du notebook)* |
-| Durée d'entraînement (`train_runtime`) | *(à remplir)* |
-| **Lien Colab partagé** | *(à coller ici)* |
+| Nombre d'échantillons | 3 000 (run exécuté) |
+| Epochs | 3 (1 125 pas) |
+| Loss (étape 25 → 125) | 2.583 → 1.408 (décroissance monotone) |
+| Loss finale | *(à finaliser en fin de run — voir `evidence/medical_training_loss.md`)* |
+| Durée d'entraînement (`train_runtime`) | *(à finaliser en fin de run)* |
+| **Lien Colab partagé** | https://colab.research.google.com/drive/1yqyraeYINoujZjLrk9KR6JCj6zEMl2VH |
+
+Courbe de loss observée et détails du run : `evidence/medical_training_loss.md`.
 
 ### 2.3 Cadre et avertissements
 
