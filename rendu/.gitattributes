@@ -1,0 +1,4 @@
+# Nos livrables sont versionnés en clair (contenu réel, pas de pointeurs LFS),
+# pour qu'un clone sans git-lfs récupère bien les fichiers.
+*.json -filter -diff -merge text
+*.ipynb -filter -diff -merge text
