@@ -106,13 +106,15 @@ Notebook : `medical_finetuning_colab.ipynb` (prêt pour Google Colab, GPU T4/A10
 | Méthode | QLoRA 4-bit, r=16, alpha=32 |
 | Nombre d'échantillons | 3 000 |
 | Epochs | 3 (1 125 pas) |
-| Loss (début → stabilisation) | 2.583 → ~1.44 |
-| Débit d'entraînement | ~9.7 s/pas (Tesla T4) |
+| Loss initiale → finale | 2.583 → 1.299 |
+| Loss moyenne (`train_loss`) | 1.415 |
+| Durée (`train_runtime`) | 10 994,68 s (~3 h 03) sur Tesla T4 |
 | **Lien Colab** | https://colab.research.google.com/drive/1yqyraeYINoujZjLrk9KR6JCj6zEMl2VH |
 
-La loss chute nettement sur la première epoch puis se stabilise autour de 1.4–1.5, signe d'une
-convergence propre de l'adaptateur. Courbe complète et points intermédiaires :
-`evidence/medical_training_loss.md`.
+Run complet (3 epochs) : la loss chute fortement sur la première epoch puis converge vers ~1.3.
+Le modèle fine-tuné répond correctement à des questions médicales (test conversationnel, section 9
+du notebook). Courbe et détails : `evidence/medical_training_loss.md` et
+`evidence/medical_loss_curve.png`.
 
 ### 2.3 Cadre et avertissements
 
