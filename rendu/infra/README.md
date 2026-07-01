@@ -1,6 +1,7 @@
 # INFRA — Déploiement du serveur d'inférence
 
-**Filière :** INFRA
+**Équipe 36 · Filière :** INFRA
+**Auteurs :** HALIMI Isaiah, MALAGOUEN Shemsedine
 **Objectif :** rendre l'assistant financier accessible via une API, prêt pour l'équipe DEV WEB.
 
 ---

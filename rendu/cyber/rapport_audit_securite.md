@@ -1,6 +1,7 @@
 # Rapport d'audit de sécurité — héritage TechCorp Industries
 
-**Filière :** CYBER
+**Équipe 36 · Filière :** CYBER
+**Auteur :** SUCKIEL Theo
 **Périmètre :** code, configurations, logs, datasets et modèle laissés par l'équipe précédente (licenciée).
 **Verdict global :** **DÉPLOIEMENT INTERDIT EN L'ÉTAT.** Le modèle financier est compromis par une backdoor volontaire ; le dataset d'entraînement est empoisonné pour la rendre persistante.
 

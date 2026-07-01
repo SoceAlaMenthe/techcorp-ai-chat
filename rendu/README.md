@@ -1,7 +1,22 @@
-# Rendu — Challenge IA TechCorp Industries
+# Rendu — Challenge IA TechCorp Industries — Équipe 36
 
 Reprise du projet laissé par l'équipe précédente : validation de l'intégrité de l'héritage,
 correction, et déploiement de l'assistant financier.
+
+## Équipe 36
+
+| Étudiant | Filière | Email |
+|---|---|---|
+| HALIMI Isaiah | Infra | isaiah.halimi@ynov.com |
+| MALAGOUEN Shemsedine | Infra | shemsedine.malagouen@ynov.com |
+| SUCKIEL Theo | Cyber | theo.suckiel@ynov.com |
+| BOUFFIL Mathieu | Dev | mathieu.bouffil@ynov.com |
+| MAKOUYA Brenn | Dev | brenn.makouya@ynov.com |
+
+> Répartition : **Infra** (déploiement du serveur), **Cyber** (audit de sécurité) et **Dev**
+> (interface web) sont portées par les membres de leurs filières respectives. Les volets **Data**
+> et **IA**, nécessaires à la chaîne de bout en bout, ont été traités de manière **transverse** par
+> l'équipe (analyse/nettoyage des données et fine-tuning médical expérimental).
 
 **Résultat central de la mission :** l'héritage n'était pas seulement inachevé, il était **piégé**.
 L'équipe précédente avait implanté une **backdoor volontaire** dans le modèle financier et

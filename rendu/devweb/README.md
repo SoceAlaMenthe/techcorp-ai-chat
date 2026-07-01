@@ -1,6 +1,7 @@
 # DEV WEB — Interface de chat
 
-**Filière :** DEV WEB
+**Équipe 36 · Filière :** DEV WEB
+**Auteurs :** BOUFFIL Mathieu, MAKOUYA Brenn
 **Stack :** Streamlit (Python) → API Ollama (`/api/chat`, streaming).
 
 Interface de chat pour interagir en temps réel avec l'assistant financier déployé par l'équipe

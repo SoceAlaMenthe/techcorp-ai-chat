@@ -1,6 +1,6 @@
 # IA — Validation du modèle + fine-tuning médical
 
-**Filière :** IA
+**Équipe 36 · Filière :** IA (traitée en transverse)
 
 Deux missions :
 

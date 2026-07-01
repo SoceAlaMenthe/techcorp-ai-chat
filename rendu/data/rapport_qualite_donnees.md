@@ -1,6 +1,7 @@
 # Rapport de qualité des données — datasets hérités
 
-**Filière :** DATA
+**Équipe 36 · Filière :** DATA (traitée en transverse)
+**Contributeurs :** équipe 36
 **Périmètre :** `datasets/finance_dataset_final.json`, `datasets/test_dataset_16000.json`, dataset médical `ruslanmv/ai-medical-chatbot`
 **Outil :** `analyze_datasets.py` (fourni dans ce dossier)
 

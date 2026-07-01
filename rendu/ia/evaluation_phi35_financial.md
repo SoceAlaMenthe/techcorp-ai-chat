@@ -1,6 +1,7 @@
 # Évaluation du modèle Phi-3.5-Financial + mission médicale R&D
 
-**Filière :** IA
+**Équipe 36 · Filière :** IA (traitée en transverse)
+**Contributeurs :** équipe 36
 **Périmètre :** validation du modèle financier de production + fine-tuning médical expérimental.
 
 ---
