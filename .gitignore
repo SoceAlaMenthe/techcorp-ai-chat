@@ -1,0 +1,16 @@
+datasets/dataset_v0.json
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Streamlit / outils
+.streamlit/secrets.toml
+
+# OS / éditeurs
+Thumbs.db
+.vscode/
+.idea/
